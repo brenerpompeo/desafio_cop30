@@ -100,7 +100,6 @@
             gap: 1.5rem;
         }
         
-        /* Scrollbar customizada */
         .content-card::-webkit-scrollbar { width: 8px; }
         .content-card::-webkit-scrollbar-track { background: transparent; }
         .content-card::-webkit-scrollbar-thumb {
@@ -119,19 +118,14 @@
             pointer-events: none;
         }
         .app-footer img {
-            height: 35px; /* MODIFICADO: Tamanho base para mobile */
+            height: 35px;
             opacity: 0.7;
             max-width: 90vw;
-            transition: height 0.3s ease; /* MODIFICADO: Adiciona transição suave */
+            transition: height 0.3s ease;
         }
-
-        /* MODIFICADO: Media query para aumentar o logo em telas maiores */
         @media (min-width: 768px) {
-            .app-footer img {
-                height: 50px; /* Tamanho maior para tablets e desktops */
-            }
+            .app-footer img { height: 50px; }
         }
-
 
         /* --- ELEMENTOS DE UI REUTILIZÁVEIS --- */
         .btn {
@@ -145,22 +139,18 @@
             transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
             text-align: center;
         }
-
         .btn-primary {
             background-color: var(--accent);
             color: var(--gc-blue-darker);
             box-shadow: 0 4px 15px rgba(52, 211, 153, 0.3);
         }
-
         .btn-primary:hover { background-color: var(--accent-dark); }
-        
         .btn-primary:disabled {
             background-color: #555;
             color: #999;
             cursor: not-allowed;
             box-shadow: none;
         }
-
         .btn-glass {
             background: var(--bg-glass);
             color: var(--text-light);
@@ -171,9 +161,7 @@
             border-radius: 15px;
             text-align: left;
         }
-        
         .btn:active, .btn-glass:active, .icon-btn:active { transform: scale(0.95); }
-
         .icon-btn {
             background: none;
             border: none;
@@ -182,7 +170,6 @@
             font-size: 1.5rem;
             transition: color 0.2s, transform 0.2s;
         }
-        
         .icon-btn:hover { color: var(--text-light); }
 
         /* --- TELA 1: SPLASH SCREEN --- */
@@ -197,11 +184,7 @@
             width: 100%;
             max-width: 500px;
         }
-        .cop30-logo-splash {
-            width: 60%;
-            max-width: 250px;
-            animation: fadeIn 1s ease-out;
-        }
+        .cop30-logo-splash { width: 60%; max-width: 250px; animation: fadeIn 1s ease-out; }
         .splash-title { margin: 1rem 0; }
         .splash-title h1 {
             font-size: 2rem;
@@ -229,16 +212,13 @@
         .btn-start:hover { background-color: #e0e8ef; }
 
         /* --- TELA 2: FORMULÁRIO DE CAPTURA --- */
-        /* MODIFICADO: Aumenta o espaçamento geral do card do formulário */
-        #form-screen .content-card {
-            gap: 2rem;
-        }
+        #form-screen .content-card { gap: 2rem; }
         .form-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            margin-bottom: -1rem; /* Ajuste para aproximar do título */
+            margin-bottom: -1rem;
         }
         .form-group {
             display: flex;
@@ -246,10 +226,7 @@
             gap: 0.5rem;
             width: 100%;
         }
-        .form-group label {
-            font-weight: 500;
-            color: var(--text-muted);
-        }
+        .form-group label { font-weight: 500; color: var(--text-muted); }
         .form-group input[type="text"],
         .form-group input[type="number"],
         .form-group input[type="tel"] {
@@ -268,261 +245,69 @@
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
         }
-        .consent-group {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            cursor: pointer;
-        }
-        .consent-group input[type="checkbox"] {
-            width: 1.2em;
-            height: 1.2em;
-            accent-color: var(--accent);
-        }
-        .consent-group label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        #form-error-message {
-            color: var(--err);
-            text-align: center;
-            font-size: 0.9rem;
-            min-height: 1.2em;
-        }
+        .consent-group { display: flex; align-items: center; gap: 0.8rem; cursor: pointer; }
+        .consent-group input[type="checkbox"] { width: 1.2em; height: 1.2em; accent-color: var(--accent); }
+        .consent-group label { color: var(--text-muted); font-size: 0.9rem; }
+        #form-error-message { color: var(--err); text-align: center; font-size: 0.9rem; min-height: 1.2em; }
 
         /* --- TELA 3: MENU DE TEMÁTICAS --- */
-        .menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
+        .menu-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .menu-header h2 { font-size: 1.8rem; }
-        #themes-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-        }
+        #themes-list { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
         .theme-btn { display: block; }
-        .theme-btn span {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 700;
-            display: block;
-            margin-bottom: 0.3rem;
-        }
+        .theme-btn span { font-size: 0.8rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 0.3rem; }
         .theme-btn p { font-size: 1rem; font-weight: 500; }
         .theme-btn small { font-size: 0.9rem; color: var(--text-muted); }
 
         /* --- TELA 4: QUIZ --- */
-        .quiz-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background-color: var(--border-glass);
-            border-radius: 4px;
-            margin: 0.5rem 0;
-        }
-        #progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: var(--accent);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-        #question-counter {
-            text-align: center;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        #question-text {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin: 1rem 0;
-            text-align: center;
-        }
-        #options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        #progress-bar-container { width: 100%; height: 8px; background-color: var(--border-glass); border-radius: 4px; margin: 0.5rem 0; }
+        #progress-bar { width: 0%; height: 100%; background-color: var(--accent); border-radius: 4px; transition: width 0.3s ease; }
+        #question-counter { text-align: center; color: var(--text-muted); font-weight: 500; }
+        #question-text { font-size: 1.4rem; font-weight: 700; margin: 1rem 0; text-align: center; }
+        #options-container { display: flex; flex-direction: column; gap: 1rem; }
         .option-btn { transition: background-color 0.3s, border-color 0.3s, opacity 0.3s; }
-        .option-btn.correct {
-            background-color: var(--ok);
-            border-color: var(--ok);
-            color: white;
-            animation: pulse-correct 0.5s ease;
-        }
-        .option-btn.incorrect {
-            background-color: var(--err);
-            border-color: var(--err);
-            color: white;
-            animation: shake 0.5s ease;
-        }
-        .option-btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .option-btn.disabled:not(.correct) {
-            background: var(--bg-glass);
-            border-color: var(--border-glass);
-            color: var(--text-light);
-        }
+        .option-btn.correct { background-color: var(--ok); border-color: var(--ok); color: white; animation: pulse-correct 0.5s ease; }
+        .option-btn.incorrect { background-color: var(--err); border-color: var(--err); color: white; animation: shake 0.5s ease; }
+        .option-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+        .option-btn.disabled:not(.correct) { background: var(--bg-glass); border-color: var(--border-glass); color: var(--text-light); }
 
         /* --- TELA 5: RESULTADO FINAL --- */
         #result-screen .content-card { text-align: center; }
-        .score-circle {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 1rem auto;
-        }
-        .score-circle svg {
-            width: 150px;
-            height: 150px;
-            transform: rotate(-90deg);
-        }
-        .score-circle circle {
-            fill: none;
-            stroke-width: 12;
-        }
+        .score-circle { position: relative; width: 150px; height: 150px; margin: 1rem auto; }
+        .score-circle svg { width: 150px; height: 150px; transform: rotate(-90deg); }
+        .score-circle circle { fill: none; stroke-width: 12; }
         .score-circle .bg-circle { stroke: var(--border-glass); }
-        .score-circle .progress-circle {
-            stroke: var(--accent);
-            stroke-dasharray: 409;
-            stroke-dashoffset: 409;
-            transition: stroke-dashoffset 1s ease-out;
-            stroke-linecap: round;
-        }
-        .score-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        #final-score {
-            font-size: 3rem;
-            font-weight: 900;
-        }
-        .score-text span {
-            display: block;
-            font-size: 1rem;
-            color: var(--text-muted);
-        }
-        #video-container {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-        }
-        #video-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .score-circle .progress-circle { stroke: var(--accent); stroke-dasharray: 409; stroke-dashoffset: 409; transition: stroke-dashoffset 1s ease-out; stroke-linecap: round; }
+        .score-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        #final-score { font-size: 3rem; font-weight: 900; }
+        .score-text span { display: block; font-size: 1rem; color: var(--text-muted); }
+        #video-container { width: 100%; aspect-ratio: 16 / 9; background-color: #000; border-radius: 15px; overflow: hidden; border: 1px solid var(--border-glass); }
+        #video-container iframe { width: 100%; height: 100%; border: none; }
 
         /* --- TELA 6: RANKING --- */
-        #ranking-list {
-            list-style: none;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        #ranking-list li {
-            display: flex;
-            align-items: center;
-            background: var(--bg-glass);
-            padding: 1rem;
-            border-radius: 15px;
-            border: 1px solid var(--border-glass);
-        }
-        .rank-pos {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--text-muted);
-            width: 40px;
-            text-align: center;
-        }
+        #ranking-list { list-style: none; width: 100%; display: flex; flex-direction: column; gap: 1rem; }
+        #ranking-list li { display: flex; align-items: center; background: var(--bg-glass); padding: 1rem; border-radius: 15px; border: 1px solid var(--border-glass); }
+        .rank-pos { font-size: 1.5rem; font-weight: 900; color: var(--text-muted); width: 40px; text-align: center; }
         .rank-info { flex-grow: 1; }
         .rank-info p { font-weight: 500; }
         .rank-info small { color: var(--text-muted); }
-        .rank-score {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent);
-        }
+        .rank-score { font-size: 1.8rem; font-weight: 900; color: var(--accent); }
 
         /* --- MODAL DE CONFIRMAÇÃO --- */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background: var(--gc-blue-darker);
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid var(--border-glass);
-            transform: scale(0.9);
-            transition: transform 0.3s;
-        }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--gc-blue-darker); padding: 2rem; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; border: 1px solid var(--border-glass); transform: scale(0.9); transition: transform 0.3s; }
         .modal.active .modal-content { transform: scale(1); }
         .modal-content h3 { margin-bottom: 1rem; }
-        .modal-content p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-        .btn-secondary {
-            background: var(--bg-glass);
-            color: var(--text-light);
-        }
+        .modal-content p { color: var(--text-muted); margin-bottom: 2rem; }
+        .modal-buttons { display: flex; gap: 1rem; justify-content: center; }
+        .btn-secondary { background: var(--bg-glass); color: var(--text-light); }
 
         /* --- ANIMAÇÕES --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulse-correct {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-correct { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
     </style>
 </head>
 <body>
@@ -545,47 +330,25 @@
         <!-- TELA 2: Formulário de Captura -->
         <div id="form-screen" class="panel">
             <div class="content-card">
-                <!-- MODIFICADO: Adicionado header com botão de voltar -->
                 <header class="form-header">
-                     <button id="back-to-splash-btn" class="icon-btn" aria-label="Voltar à tela inicial">
+                     <button id="back-to-menu-from-form-btn" class="icon-btn" aria-label="Voltar ao menu">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                      </button>
-                     <div style="width: 24px;"></div> <!-- Espaçador -->
+                     <div style="width: 24px;"></div>
                 </header>
-
                 <h2 style="text-align: center;">Participe do Desafio</h2>
                 <p style="text-align: center; color: var(--text-muted); margin-top: -1.5rem;">
-                    Preencha seus dados para começar e receber novidades.
+                    Preencha os dados do entrevistado para iniciar.
                 </p>
                 <form id="lead-form" novalidate>
-                    <div class="form-group">
-                        <label for="form-name">Nome Completo</label>
-                        <input type="text" id="form-name" required placeholder="Seu nome aqui">
-                    </div>
-                    <div class="form-group">
-                        <label for="form-age">Idade</label>
-                        <input type="number" id="form-age" required placeholder="Sua idade">
-                    </div>
-                    <div class="form-group">
-                        <label for="form-job">Profissão</label>
-                        <input type="text" id="form-job" required placeholder="Sua profissão">
-                    </div>
-                    <div class="form-group">
-                        <label for="form-company">Empresa</label>
-                        <input type="text" id="form-company" required placeholder="Onde você trabalha">
-                    </div>
-                    <div class="form-group">
-                        <label for="form-whatsapp">WhatsApp</label>
-                        <input type="tel" id="form-whatsapp" required placeholder="(XX) XXXXX-XXXX">
-                    </div>
-                    <div class="consent-group">
-                        <input type="checkbox" id="form-consent" required>
-                        <label for="form-consent">
-                            Concordo com os termos e autorizo o uso de dados e imagem para fins de divulgação da ação.
-                        </label>
-                    </div>
+                    <div class="form-group"><label for="form-name">Nome Completo</label><input type="text" id="form-name" required placeholder="Nome do entrevistado"></div>
+                    <div class="form-group"><label for="form-age">Idade</label><input type="number" id="form-age" required placeholder="Idade do entrevistado"></div>
+                    <div class="form-group"><label for="form-job">Profissão</label><input type="text" id="form-job" required placeholder="Profissão do entrevistado"></div>
+                    <div class="form-group"><label for="form-company">Empresa</label><input type="text" id="form-company" required placeholder="Empresa do entrevistado"></div>
+                    <div class="form-group"><label for="form-whatsapp">WhatsApp</label><input type="tel" id="form-whatsapp" required placeholder="(XX) XXXXX-XXXX"></div>
+                    <div class="consent-group"><input type="checkbox" id="form-consent" required><label for="form-consent">Concordo com os termos e autorizo o uso de dados e imagem para fins de divulgação da ação.</label></div>
                     <p id="form-error-message"></p>
-                    <button type="submit" id="submit-lead-btn" class="btn btn-primary" style="width: 100%;" disabled>Participar do Desafio</button>
+                    <button type="submit" id="submit-lead-btn" class="btn btn-primary" style="width: 100%;" disabled>Iniciar Quiz</button>
                 </form>
             </div>
         </div>
@@ -595,11 +358,7 @@
             <div class="content-card">
                 <header class="menu-header">
                     <h2>Escolha um Tema</h2>
-                    <div>
-                        <button id="home-btn" class="icon-btn" aria-label="Voltar à tela inicial">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        </button>
-                    </div>
+                    <div><button id="home-btn" class="icon-btn" aria-label="Voltar à tela inicial"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button></div>
                 </header>
                 <div id="themes-list"></div>
                 <button id="show-ranking-btn" class="btn btn-primary">Ver Ranking</button>
@@ -610,13 +369,8 @@
         <div id="quiz-screen" class="panel">
              <div class="content-card">
                 <header class="quiz-header">
-                     <button id="back-to-menu-btn" class="icon-btn" aria-label="Voltar ao menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                     </button>
-                     <div class="text-center">
-                        <h3 id="quiz-theme-title">Nome do Tema</h3>
-                        <p id="question-counter" class="text-sm text-muted">Pergunta 1 de 6</p>
-                    </div>
+                     <button id="back-to-menu-btn" class="icon-btn" aria-label="Voltar ao menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                     <div class="text-center"><h3 id="quiz-theme-title">Nome do Tema</h3><p id="question-counter" class="text-sm text-muted">Pergunta 1 de 6</p></div>
                      <div style="width: 24px;"></div>
                 </header>
                 <div id="progress-bar-container"><div id="progress-bar"></div></div>
@@ -632,19 +386,11 @@
                 <h2>Resultado Final</h2>
                 <p id="result-theme-title" class="text-muted">A Visão Estratégica</p>
                 <div class="score-circle">
-                    <svg>
-                        <circle class="bg-circle" cx="75" cy="75" r="65"></circle>
-                        <circle id="score-progress-circle" class="progress-circle" cx="75" cy="75" r="65"></circle>
-                    </svg>
-                    <div class="score-text">
-                        <p id="final-score">0</p>
-                        <span>pontos</span>
-                    </div>
+                    <svg><circle class="bg-circle" cx="75" cy="75" r="65"></circle><circle id="score-progress-circle" class="progress-circle" cx="75" cy="75" r="65"></circle></svg>
+                    <div class="score-text"><p id="final-score">0</p><span>pontos</span></div>
                 </div>
                 <h3>Assista à resposta dos especialistas!</h3>
-                <div id="video-container">
-                    <iframe id="result-video" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+                <div id="video-container"><iframe id="result-video" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
                  <button id="back-to-menu-from-result-btn" class="btn btn-primary">Voltar ao Menu</button>
             </div>
         </div>
@@ -653,13 +399,9 @@
         <div id="ranking-screen" class="panel">
             <div class="content-card">
                 <header class="menu-header">
-                    <button id="back-to-menu-from-ranking-btn" class="icon-btn" aria-label="Voltar ao menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                     </button>
+                    <button id="back-to-menu-from-ranking-btn" class="icon-btn" aria-label="Voltar ao menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                     <h2>Ranking</h2>
-                    <button id="reset-ranking-btn" class="icon-btn" aria-label="Resetar Ranking">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                    </button>
+                    <button id="reset-ranking-btn" class="icon-btn" aria-label="Resetar Ranking"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
                 </header>
                 <ul id="ranking-list"></ul>
             </div>
@@ -688,9 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- BANCO DE DADOS DO QUIZ ---
     const quizData = [
         {
-            theme: "A Visão Estratégica",
-            influencer: "Gleice Damasceno",
-            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            theme: "A Visão Estratégica", influencer: "Gleice Damasceno", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
             questions: [
                 { q: "O que significa a sigla COP e em qual cidade brasileira será a COP30?", o: ["Congresso das Políticas, em São Paulo", "Conferência das Partes, em Belém do Pará", "Comitê de Organizações, no Rio de Janeiro", "Cúpula de Operações Planetárias, em Brasília"], a: 1 },
                 { q: "Qual a importância da COP30 ser realizada no Brasil?", o: ["Apenas para aumentar o turismo na região amazônica.", "Porque o Brasil possui o maior número de soluções em escala para a crise climática e o evento destaca a Amazônia.", "Para que o Brasil possa assumir a liderança política global isoladamente.", "Porque é a primeira vez que uma COP acontece no hemisfério sul."], a: 1 },
@@ -700,16 +440,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 { q: "Qual o risco para as empresas que ficam na 'zona de conforto' e não se adaptam à agenda climática e social?", o: ["Nenhum, desde que continuem sendo lucrativas.", "Podem perder relevância e ficar de fora das transformações que o país precisa.", "Apenas o risco de receber multas leves do governo.", "O risco de perder seguidores nas redes sociais."], a: 1 }
             ]
         },
-        // ... (restante dos dados do quiz)
+        {
+            theme: "Justiça Climática e Urgência", influencer: "Isabelle Nogueira", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            questions: [ { q: "Pergunta Justiça 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+        },
+        {
+            theme: "A Nova Economia e Soluções", influencer: "Nataly Neri", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            questions: [ { q: "Pergunta Economia 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+        },
+        {
+            theme: "Engajamento e Comunicação", influencer: "Beta Boechat", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            questions: [ { q: "Pergunta Engajamento 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+        },
+        {
+            theme: "Saberes e Responsabilidades", influencer: "Brenër Pompêo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            questions: [ { q: "Pergunta Saberes 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+        }
     ];
 
     // --- VARIÁVEIS DE ESTADO ---
-    let currentThemeIndex = 0;
     let currentQuestionIndex = 0;
-    let currentScore = 0; // Armazena a pontuação bruta (ex: 10, 20, 30...)
+    let currentScore = 0;
     let answerSelected = false;
+    let selectedThemeIndex = null;
     const SCORES_KEY = 'cop30_scores';
-    const USER_REGISTERED_KEY = 'cop30_user_registered';
+    let isUserRegisteredInSession = false;
 
     // --- ELEMENTOS DO DOM ---
     const panels = document.querySelectorAll('.panel');
@@ -731,6 +486,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const showPanel = (panelId) => {
         panels.forEach(p => p.classList.remove('active'));
         document.getElementById(panelId).classList.add('active');
+    };
+
+    const resetInterviewSession = () => {
+        isUserRegisteredInSession = false;
+        selectedThemeIndex = null;
+        leadForm.reset();
+        validateForm();
+        showPanel('splash-screen');
     };
 
     // --- LÓGICA DO FORMULÁRIO DE CAPTURA ---
@@ -758,32 +521,40 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.result === 'success') {
-                localStorage.setItem(USER_REGISTERED_KEY, 'true');
-                showPanel('menu-screen');
+                isUserRegisteredInSession = true;
+                startQuiz(selectedThemeIndex);
             } else { throw new Error(data.message || 'Erro desconhecido.'); }
         })
         .catch(error => {
             console.error('Error!', error.message);
             formErrorMessage.textContent = 'Ocorreu um erro. Tente novamente.';
             submitLeadBtn.disabled = false;
-            submitLeadBtn.textContent = 'Participar do Desafio';
+            submitLeadBtn.textContent = 'Iniciar Quiz';
         });
     };
 
     // --- FUNÇÕES DE LÓGICA DO QUIZ ---
+    const selectTheme = (themeIndex) => {
+        selectedThemeIndex = themeIndex;
+        if (isUserRegisteredInSession) {
+            startQuiz(themeIndex);
+        } else {
+            showPanel('form-screen');
+        }
+    };
+
     const startQuiz = (themeIndex) => {
-        currentThemeIndex = themeIndex;
         currentQuestionIndex = 0;
         currentScore = 0;
         answerSelected = false;
-        loadQuestion();
+        loadQuestion(themeIndex);
         showPanel('quiz-screen');
     };
 
-    const loadQuestion = () => {
+    const loadQuestion = (themeIndex) => {
         answerSelected = false;
         nextQuestionBtn.disabled = true;
-        const themeData = quizData[currentThemeIndex];
+        const themeData = quizData[themeIndex];
         const questionData = themeData.questions[currentQuestionIndex];
         document.getElementById('quiz-theme-title').innerText = themeData.theme;
         document.getElementById('question-counter').innerText = `Pergunta ${currentQuestionIndex + 1} de ${themeData.questions.length}`;
@@ -823,40 +594,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nextQuestion = () => {
         currentQuestionIndex++;
-        const themeData = quizData[currentThemeIndex];
+        const themeData = quizData[selectedThemeIndex];
         if (currentQuestionIndex < themeData.questions.length) {
-            loadQuestion();
+            loadQuestion(selectedThemeIndex);
         } else {
-            finishQuiz();
+            finishQuiz(selectedThemeIndex);
         }
     };
     
-    const finishQuiz = () => {
-        saveScore(currentThemeIndex, currentScore);
-        showResult();
+    const finishQuiz = (themeIndex) => {
+        saveScore(themeIndex, currentScore);
+        showResult(themeIndex);
     };
     
     // --- FUNÇÕES DE RESULTADO E RANKING ---
-    const showResult = () => {
-        const themeData = quizData[currentThemeIndex];
+    const showResult = (themeIndex) => {
+        const themeData = quizData[themeIndex];
         const maxScore = themeData.questions.length * 10;
-        // MODIFICADO: Normaliza a pontuação para uma base de 100
         const normalizedScore = maxScore > 0 ? Math.round((currentScore / maxScore) * 100) : 0;
-
         document.getElementById('result-theme-title').innerText = themeData.theme;
         document.getElementById('final-score').innerText = normalizedScore;
         document.getElementById('result-video').src = themeData.videoUrl;
-        
         const circle = document.getElementById('score-progress-circle');
         const radius = circle.r.baseVal.value;
         const circumference = 2 * Math.PI * radius;
-        // MODIFICADO: Usa a pontuação normalizada para a animação do círculo
         const offset = circumference - (normalizedScore / 100) * circumference;
-        
         circle.style.strokeDasharray = circumference;
         circle.style.strokeDashoffset = circumference;
         setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
-
         showPanel('result-screen');
     };
     
@@ -864,50 +629,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const scores = getScores();
         const rankingList = document.getElementById('ranking-list');
         rankingList.innerHTML = '';
-        
         const sortedScores = quizData.map((theme, index) => ({
-            theme: theme.theme,
-            influencer: theme.influencer,
-            score: scores[index] || 0,
-            maxScore: theme.questions.length * 10
+            theme: theme.theme, influencer: theme.influencer,
+            score: scores[index] || 0, maxScore: theme.questions.length * 10
         })).sort((a,b) => b.score - a.score);
-        
         if (sortedScores.every(item => item.score === 0)) {
-            rankingList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Nenhuma pontuação registrada ainda. Jogue para aparecer no ranking!</p>`;
+            rankingList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Nenhuma pontuação registrada ainda.</p>`;
         } else {
             sortedScores.forEach((item, index) => {
-                // MODIFICADO: Normaliza a pontuação do ranking para uma base de 100
                 const normalizedRankScore = item.maxScore > 0 ? Math.round((item.score / item.maxScore) * 100) : 0;
                 const li = document.createElement('li');
-                li.innerHTML = `
-                    <span class="rank-pos">${index + 1}</span>
-                    <div class="rank-info">
-                        <p>${item.theme}</p>
-                        <small>com ${item.influencer}</small>
-                    </div>
-                    <span class="rank-score">${normalizedRankScore}</span>
-                `;
+                li.innerHTML = `<span class="rank-pos">${index + 1}</span><div class="rank-info"><p>${item.theme}</p><small>com ${item.influencer}</small></div><span class="rank-score">${normalizedRankScore}</span>`;
                 rankingList.appendChild(li);
             });
         }
         showPanel('ranking-screen');
     };
     
-    // --- FUNÇÕES DO LOCALSTORAGE ---
+    // --- FUNÇÕES DO LOCALSTORAGE (para o ranking, que é persistente) ---
     const getScores = () => {
         const scores = localStorage.getItem(SCORES_KEY);
         return scores ? JSON.parse(scores) : {};
     };
-    
     const saveScore = (themeIndex, score) => {
         const scores = getScores();
-        // Salva a pontuação bruta, a normalização é apenas para exibição
         if (!scores[themeIndex] || score > scores[themeIndex]) {
             scores[themeIndex] = score;
             localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
         }
     };
-    
     const resetScores = () => {
         localStorage.removeItem(SCORES_KEY);
         loadRanking();
@@ -920,10 +670,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.createElement('button');
             button.className = 'btn btn-glass theme-btn';
             button.innerHTML = `<span>TEMÁTICA ${index + 1}</span><p>${theme.theme}</p><small>com ${theme.influencer}</small>`;
-            button.onclick = () => startQuiz(index);
+            button.onclick = () => selectTheme(index);
             themesList.appendChild(button);
         });
-
         [formName, formAge, formJob, formCompany, formWhatsapp, formConsent].forEach(input => {
             input.addEventListener('input', validateForm);
         });
@@ -931,21 +680,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // Navegação geral
-    document.querySelector('#splash-screen .btn-start').onclick = () => {
-        if (localStorage.getItem(USER_REGISTERED_KEY)) {
-            showPanel('menu-screen');
-        } else {
-            showPanel('form-screen');
-        }
-    };
-    // MODIFICADO: Adiciona funcionalidade ao novo botão de voltar do formulário
-    document.getElementById('back-to-splash-btn').onclick = () => showPanel('splash-screen');
-    document.getElementById('home-btn').onclick = () => showPanel('splash-screen');
+    document.querySelector('#splash-screen .btn-start').onclick = () => showPanel('menu-screen');
+    document.getElementById('back-to-menu-from-form-btn').onclick = () => showPanel('menu-screen');
+    document.getElementById('home-btn').onclick = resetInterviewSession;
     document.getElementById('back-to-menu-btn').onclick = () => showPanel('menu-screen');
-    document.getElementById('back-to-menu-from-result-btn').onclick = () => {
-        document.getElementById('result-video').src = '';
-        showPanel('menu-screen');
-    };
+    document.getElementById('back-to-menu-from-result-btn').onclick = () => showPanel('menu-screen');
     document.getElementById('back-to-menu-from-ranking-btn').onclick = () => showPanel('menu-screen');
     
     // Lógica do Quiz e Ranking
