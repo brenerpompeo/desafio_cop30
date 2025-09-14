@@ -119,10 +119,19 @@
             pointer-events: none;
         }
         .app-footer img {
-            height: 35px;
+            height: 35px; /* MODIFICADO: Tamanho base para mobile */
             opacity: 0.7;
             max-width: 90vw;
+            transition: height 0.3s ease; /* MODIFICADO: Adiciona transição suave */
         }
+
+        /* MODIFICADO: Media query para aumentar o logo em telas maiores */
+        @media (min-width: 768px) {
+            .app-footer img {
+                height: 50px; /* Tamanho maior para tablets e desktops */
+            }
+        }
+
 
         /* --- ELEMENTOS DE UI REUTILIZÁVEIS --- */
         .btn {
@@ -219,7 +228,18 @@
         }
         .btn-start:hover { background-color: #e0e8ef; }
 
-        /* --- NOVA TELA 2: FORMULÁRIO DE CAPTURA --- */
+        /* --- TELA 2: FORMULÁRIO DE CAPTURA --- */
+        /* MODIFICADO: Aumenta o espaçamento geral do card do formulário */
+        #form-screen .content-card {
+            gap: 2rem;
+        }
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: -1rem; /* Ajuste para aproximar do título */
+        }
         .form-group {
             display: flex;
             flex-direction: column;
@@ -522,11 +542,19 @@
             </div>
         </div>
 
-        <!-- NOVA TELA 2: Formulário de Captura -->
+        <!-- TELA 2: Formulário de Captura -->
         <div id="form-screen" class="panel">
             <div class="content-card">
+                <!-- MODIFICADO: Adicionado header com botão de voltar -->
+                <header class="form-header">
+                     <button id="back-to-splash-btn" class="icon-btn" aria-label="Voltar à tela inicial">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                     </button>
+                     <div style="width: 24px;"></div> <!-- Espaçador -->
+                </header>
+
                 <h2 style="text-align: center;">Participe do Desafio</h2>
-                <p style="text-align: center; color: var(--text-muted); margin-top: -1rem;">
+                <p style="text-align: center; color: var(--text-muted); margin-top: -1.5rem;">
                     Preencha seus dados para começar e receber novidades.
                 </p>
                 <form id="lead-form" novalidate>
@@ -672,13 +700,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 { q: "Qual o risco para as empresas que ficam na 'zona de conforto' e não se adaptam à agenda climática e social?", o: ["Nenhum, desde que continuem sendo lucrativas.", "Podem perder relevância e ficar de fora das transformações que o país precisa.", "Apenas o risco de receber multas leves do governo.", "O risco de perder seguidores nas redes sociais."], a: 1 }
             ]
         },
-        // ... (restante dos dados do quiz omitido para brevidade, mas deve estar aqui)
+        // ... (restante dos dados do quiz)
     ];
 
     // --- VARIÁVEIS DE ESTADO ---
     let currentThemeIndex = 0;
     let currentQuestionIndex = 0;
-    let currentScore = 0;
+    let currentScore = 0; // Armazena a pontuação bruta (ex: 10, 20, 30...)
     let answerSelected = false;
     const SCORES_KEY = 'cop30_scores';
     const USER_REGISTERED_KEY = 'cop30_user_registered';
@@ -689,8 +717,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextQuestionBtn = document.getElementById('next-question-btn');
     const optionsContainer = document.getElementById('options-container');
     const confirmModal = document.getElementById('confirm-modal');
-
-    // --- NOVOS ELEMENTOS DO FORMULÁRIO ---
     const leadForm = document.getElementById('lead-form');
     const formName = document.getElementById('form-name');
     const formAge = document.getElementById('form-age');
@@ -713,48 +739,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const isAgeValid = formAge.value.trim() !== '' && !isNaN(formAge.value);
         const isJobValid = formJob.value.trim() !== '';
         const isCompanyValid = formCompany.value.trim() !== '';
-        const isWhatsappValid = formWhatsapp.value.trim().length > 8; // Validação simples
+        const isWhatsappValid = formWhatsapp.value.trim().length > 8;
         const isConsentChecked = formConsent.checked;
-
-        if (isNameValid && isAgeValid && isJobValid && isCompanyValid && isWhatsappValid && isConsentChecked) {
-            submitLeadBtn.disabled = false;
-        } else {
-            submitLeadBtn.disabled = true;
-        }
+        submitLeadBtn.disabled = !(isNameValid && isAgeValid && isJobValid && isCompanyValid && isWhatsappValid && isConsentChecked);
     };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        
-        // URL do seu Google Apps Script (substitua pela sua)
         const scriptURL = 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI';
-
         submitLeadBtn.disabled = true;
         submitLeadBtn.textContent = 'Enviando...';
         formErrorMessage.textContent = '';
-
         const formData = {
-            name: formName.value,
-            age: formAge.value,
-            job: formJob.value,
-            company: formCompany.value,
-            whatsapp: formWhatsapp.value,
-            consent: formConsent.checked
+            name: formName.value, age: formAge.value, job: formJob.value,
+            company: formCompany.value, whatsapp: formWhatsapp.value, consent: formConsent.checked
         };
-
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: { 'Content-Type': 'application/json' }
-        })
+        fetch(scriptURL, { method: 'POST', body: JSON.stringify(formData), headers: { 'Content-Type': 'application/json' } })
         .then(response => response.json())
         .then(data => {
             if (data.result === 'success') {
                 localStorage.setItem(USER_REGISTERED_KEY, 'true');
                 showPanel('menu-screen');
-            } else {
-                throw new Error(data.message || 'Erro desconhecido no servidor.');
-            }
+            } else { throw new Error(data.message || 'Erro desconhecido.'); }
         })
         .catch(error => {
             console.error('Error!', error.message);
@@ -779,14 +785,11 @@ document.addEventListener('DOMContentLoaded', () => {
         nextQuestionBtn.disabled = true;
         const themeData = quizData[currentThemeIndex];
         const questionData = themeData.questions[currentQuestionIndex];
-
         document.getElementById('quiz-theme-title').innerText = themeData.theme;
         document.getElementById('question-counter').innerText = `Pergunta ${currentQuestionIndex + 1} de ${themeData.questions.length}`;
         document.getElementById('question-text').innerText = questionData.q;
-        
         const progress = ((currentQuestionIndex) / themeData.questions.length) * 100;
         document.getElementById('progress-bar').style.width = `${progress}%`;
-
         optionsContainer.innerHTML = '';
         questionData.o.forEach((optionText, index) => {
             const button = document.createElement('button');
@@ -800,7 +803,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectAnswer = (selectedIndex, correctIndex) => {
         if (answerSelected) return;
         answerSelected = true;
-
         const optionButtons = optionsContainer.querySelectorAll('.option-btn');
         optionButtons.forEach((btn, index) => {
             btn.classList.add('disabled');
@@ -816,7 +818,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('correct');
             }
         });
-
         nextQuestionBtn.disabled = false;
     };
 
@@ -838,15 +839,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FUNÇÕES DE RESULTADO E RANKING ---
     const showResult = () => {
         const themeData = quizData[currentThemeIndex];
+        const maxScore = themeData.questions.length * 10;
+        // MODIFICADO: Normaliza a pontuação para uma base de 100
+        const normalizedScore = maxScore > 0 ? Math.round((currentScore / maxScore) * 100) : 0;
+
         document.getElementById('result-theme-title').innerText = themeData.theme;
-        document.getElementById('final-score').innerText = currentScore;
+        document.getElementById('final-score').innerText = normalizedScore;
         document.getElementById('result-video').src = themeData.videoUrl;
         
         const circle = document.getElementById('score-progress-circle');
         const radius = circle.r.baseVal.value;
         const circumference = 2 * Math.PI * radius;
-        const maxScore = themeData.questions.length * 10;
-        const offset = circumference - (currentScore / maxScore) * circumference;
+        // MODIFICADO: Usa a pontuação normalizada para a animação do círculo
+        const offset = circumference - (normalizedScore / 100) * circumference;
         
         circle.style.strokeDasharray = circumference;
         circle.style.strokeDashoffset = circumference;
@@ -863,13 +868,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedScores = quizData.map((theme, index) => ({
             theme: theme.theme,
             influencer: theme.influencer,
-            score: scores[index] || 0
+            score: scores[index] || 0,
+            maxScore: theme.questions.length * 10
         })).sort((a,b) => b.score - a.score);
         
         if (sortedScores.every(item => item.score === 0)) {
             rankingList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Nenhuma pontuação registrada ainda. Jogue para aparecer no ranking!</p>`;
         } else {
             sortedScores.forEach((item, index) => {
+                // MODIFICADO: Normaliza a pontuação do ranking para uma base de 100
+                const normalizedRankScore = item.maxScore > 0 ? Math.round((item.score / item.maxScore) * 100) : 0;
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <span class="rank-pos">${index + 1}</span>
@@ -877,7 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>${item.theme}</p>
                         <small>com ${item.influencer}</small>
                     </div>
-                    <span class="rank-score">${item.score}</span>
+                    <span class="rank-score">${normalizedRankScore}</span>
                 `;
                 rankingList.appendChild(li);
             });
@@ -893,6 +901,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const saveScore = (themeIndex, score) => {
         const scores = getScores();
+        // Salva a pontuação bruta, a normalização é apenas para exibição
         if (!scores[themeIndex] || score > scores[themeIndex]) {
             scores[themeIndex] = score;
             localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
@@ -910,16 +919,11 @@ document.addEventListener('DOMContentLoaded', () => {
         quizData.forEach((theme, index) => {
             const button = document.createElement('button');
             button.className = 'btn btn-glass theme-btn';
-            button.innerHTML = `
-                <span>TEMÁTICA ${index + 1}</span>
-                <p>${theme.theme}</p>
-                <small>com ${theme.influencer}</small>
-            `;
+            button.innerHTML = `<span>TEMÁTICA ${index + 1}</span><p>${theme.theme}</p><small>com ${theme.influencer}</small>`;
             button.onclick = () => startQuiz(index);
             themesList.appendChild(button);
         });
 
-        // Adiciona listeners para validação do formulário
         [formName, formAge, formJob, formCompany, formWhatsapp, formConsent].forEach(input => {
             input.addEventListener('input', validateForm);
         });
@@ -928,13 +932,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Navegação geral
     document.querySelector('#splash-screen .btn-start').onclick = () => {
-        // MODIFICADO: Verifica se o usuário já se registrou
         if (localStorage.getItem(USER_REGISTERED_KEY)) {
             showPanel('menu-screen');
         } else {
             showPanel('form-screen');
         }
     };
+    // MODIFICADO: Adiciona funcionalidade ao novo botão de voltar do formulário
+    document.getElementById('back-to-splash-btn').onclick = () => showPanel('splash-screen');
     document.getElementById('home-btn').onclick = () => showPanel('splash-screen');
     document.getElementById('back-to-menu-btn').onclick = () => showPanel('menu-screen');
     document.getElementById('back-to-menu-from-result-btn').onclick = () => {
@@ -943,10 +948,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.getElementById('back-to-menu-from-ranking-btn').onclick = () => showPanel('menu-screen');
     
-    // Lógica do Quiz
+    // Lógica do Quiz e Ranking
     nextQuestionBtn.onclick = nextQuestion;
-    
-    // Lógica do Ranking
     document.getElementById('show-ranking-btn').onclick = loadRanking;
     document.getElementById('reset-ranking-btn').onclick = () => confirmModal.classList.add('active');
     
