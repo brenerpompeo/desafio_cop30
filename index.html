@@ -117,14 +117,15 @@
             z-index: 100;
             pointer-events: none;
         }
+        
+        /* MODIFICADO E MELHORADO: Regra de responsividade do logo */
         .app-footer img {
-            height: 35px;
+            /* Define um tamanho mínimo de 45px, um máximo de 75px, 
+               e um tamanho fluido de 8% da largura da tela entre esses limites. */
+            height: clamp(45px, 8vw, 75px);
             opacity: 0.7;
             max-width: 90vw;
             transition: height 0.3s ease;
-        }
-        @media (min-width: 768px) {
-            .app-footer img { height: 50px; }
         }
 
         /* --- ELEMENTOS DE UI REUTILIZÁVEIS --- */
@@ -212,13 +213,18 @@
         .btn-start:hover { background-color: #e0e8ef; }
 
         /* --- TELA 2: FORMULÁRIO DE CAPTURA --- */
-        #form-screen .content-card { gap: 2rem; }
+        #form-screen .content-card { gap: 1rem; }
         .form-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
             margin-bottom: -1rem;
+        }
+        #lead-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
         .form-group {
             display: flex;
