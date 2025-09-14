@@ -70,7 +70,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem 2rem 80px 2rem; /* Espaço para footer */
+            padding: 2rem 2rem 80px 2rem;
             opacity: 0;
             visibility: hidden;
             transform: scale(0.95);
@@ -116,12 +116,17 @@
             transform: translateX(-50%);
             z-index: 100;
             pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         
-        /* MODIFICADO E MELHORADO: Regra de responsividade do logo */
+        #splash-screen.active ~ .app-footer {
+            opacity: 1;
+            visibility: visible;
+        }
+        
         .app-footer img {
-            /* Define um tamanho mínimo de 45px, um máximo de 75px, 
-               e um tamanho fluido de 8% da largura da tela entre esses limites. */
             height: clamp(45px, 8vw, 75px);
             opacity: 0.7;
             max-width: 90vw;
@@ -433,10 +438,10 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- BANCO DE DADOS DO QUIZ ---
+    // --- BANCO DE DADOS DO QUIZ (COMPLETO) ---
     const quizData = [
         {
-            theme: "A Visão Estratégica", influencer: "Gleice Damasceno", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            theme: "A Visão Estratégica", influencer: "Gleice Damasceno", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // SUBSTITUIR ID DO VÍDEO
             questions: [
                 { q: "O que significa a sigla COP e em qual cidade brasileira será a COP30?", o: ["Congresso das Políticas, em São Paulo", "Conferência das Partes, em Belém do Pará", "Comitê de Organizações, no Rio de Janeiro", "Cúpula de Operações Planetárias, em Brasília"], a: 1 },
                 { q: "Qual a importância da COP30 ser realizada no Brasil?", o: ["Apenas para aumentar o turismo na região amazônica.", "Porque o Brasil possui o maior número de soluções em escala para a crise climática e o evento destaca a Amazônia.", "Para que o Brasil possa assumir a liderança política global isoladamente.", "Porque é a primeira vez que uma COP acontece no hemisfério sul."], a: 1 },
@@ -447,20 +452,48 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            theme: "Justiça Climática e Urgência", influencer: "Isabelle Nogueira", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            questions: [ { q: "Pergunta Justiça 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+            theme: "Justiça Climática e Urgência", influencer: "Isabelle Nogueira", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // SUBSTITUIR ID DO VÍDEO
+            questions: [
+                 { q: "Qual é o principal papel de uma organização como o Pacto Global na COP30?", o: ["Agrupar o setor privado e lembrá-lo de suas responsabilidades e do cronograma.", "Organizar a logística e os painéis do evento.", "Fiscalizar as decisões tomadas pelos governos.", "Criar novas leis ambientais para o Brasil."], a: 0 },
+                 { q: "O que a 'década final' para a Agenda 2030 representa?", o: ["Que a maioria das metas já foi cumprida e estamos nos detalhes finais.", "Um alerta de que estamos atrasados e precisamos acelerar as ações urgentemente.", "Um período de comemoração das conquistas da década passada.", "Que a agenda será encerrada em 2030, com ou sem o cumprimento das metas."], a: 1 },
+                 { q: "Por que é fundamental conectar a crise climática com pautas de diversidade e direitos humanos?", o: ["Porque essa conexão atrai mais investimentos para as empresas.", "Apenas porque é uma exigência dos acordos internacionais.", "Porque as soluções sustentáveis acabam beneficiando apenas os mais ricos.", "Porque as tragédias climáticas impactam de forma desproporcional as populações das periferias e grupos minorizados."], a: 3 },
+                 { q: "Quem são as pessoas mais impactadas pelas mudanças climáticas, na visão de Monique Evelle?", o: ["Os grandes empresários e bilionários que vivem no litoral.", "As populações das periferias, que ela chama de 'novos centros urbanos'.", "Os moradores de grandes centros, independentemente da classe social.", "Os cientistas e pesquisadores que estudam o clima."], a: 1 },
+                 { q: "Monique Evelle explica que as tragédias climáticas afetam de forma desproporcional populações específicas, como as que vivem nas periferias. Que nome se dá a esse fenômeno?", o: ["Gentrificação Climática.", "Injustiça Social.", "Racismo Ambiental.", "Segregação Urbana."], a: 2 },
+                 { q: "O que a metáfora 'o barco do bilionário também está afundando' significa no contexto da crise climática?", o: ["Que a crise climática é um problema que afeta apenas a economia dos mais ricos.", "Que a tecnologia dos mais ricos não é suficiente para salvá-los.", "Que, no fim, os impactos da crise afetarão a todos, sem exceção de classe social.", "Que o foco da solução deve estar apenas em proteger os mais ricos."], a: 2 }
+            ]
         },
         {
-            theme: "A Nova Economia e Soluções", influencer: "Nataly Neri", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            questions: [ { q: "Pergunta Economia 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+            theme: "A Nova Economia e Soluções", influencer: "Nataly Neri", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // SUBSTITUIR ID DO VÍDEO
+            questions: [
+                { q: "Qual a principal diferença entre a 'Economia Verde' e a 'Economia Marrom' (tradicional)?", o: ["A Economia Verde foca em lucro a qualquer custo, enquanto a Marrom foca no social.", "A Economia Verde é baseada em regeneração e abundância, enquanto a Marrom é baseada em extração e escassez.", "A Economia Verde só se aplica a empresas de tecnologia, e a Marrom a indústrias.", "Não há diferença, são apenas termos de marketing."], a: 1 },
+                { q: "De forma simples, o que significa 'descarbonizar' a economia?", o: ["Aumentar os impostos sobre o carbono para as empresas.", "Mover de um modelo de 'pegar, usar e descartar' para um modelo circular e regenerativo.", "Substituir todos os trabalhadores por robôs que não emitem carbono.", "Parar completamente o crescimento econômico do país."], a: 1 },
+                { q: "Para as empresas, a transição para uma economia de baixo carbono é...", o: ["Um tema do futuro, que só precisa ser pensado depois de 2030.", "Apenas uma questão de marketing para atrair clientes jovens.", "Um tema do presente, essencial para a sobrevivência dos negócios.", "Uma obrigação que gera apenas custos e nenhum benefício."], a: 2 },
+                { q: "O que é o biometano, uma das soluções de descarbonização para o transporte?", o: ["Um tipo de gasolina com menos aditivos químicos.", "Um combustível fóssil extraído de novas fontes.", "Um combustível renovável gerado a partir de resíduos (biomassa), fechando um ciclo.", "Uma bateria elétrica líquida para caminhões."], a: 2 },
+                { q: "Por que o biometano é um exemplo de economia circular?", o: ["Porque ele é mais barato que o diesel.", "Porque ele permite que uma empresa transforme seu próprio resíduo em combustível para sua frota.", "Porque o seu uso gera créditos de carbono que podem ser vendidos.", "Porque sua produção depende da importação de materiais da Europa."], a: 1 },
+                { q: "O que a COP30 representa para empresas já engajadas com a pauta climática?", o: ["Uma obrigação burocrática para apresentar relatórios anuais.", "Apenas uma oportunidade para fazer networking com políticos.", "Um momento para tirar as metas do papel e acelerar a implementação de soluções.", "Uma pausa nas metas de sustentabilidade para focar em outras prioridades."], a: 2 }
+            ]
         },
         {
-            theme: "Engajamento e Comunicação", influencer: "Beta Boechat", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            questions: [ { q: "Pergunta Engajamento 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+            theme: "Engajamento e Comunicação", influencer: "Beta Boechat", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // SUBSTITUIR ID DO VÍDEO
+            questions: [
+                { q: "Qual é a principal função da comunicação na pauta da sustentabilidade?", o: ["Apenas para fazer propaganda das empresas.", "Dar acesso à sociedade sobre o que está sendo feito, com credibilidade.", "Esconder os problemas e falar só das coisas boas.", "Criar campanhas de marketing somente durante a COP30."], a: 1 },
+                { q: "Segundo Rosa Vanzella, quando a comunicação sobre a COP30 é mais importante?", o: ["Apenas durante o mês do evento.", "Somente depois que o evento acabar.", "Principalmente antes do evento começar.", "Antes, durante e, principalmente, no pós-evento para mostrar a solidez das ações."], a: 3 },
+                { q: "Qual é o elemento mais importante para a comunicação na sustentabilidade?", o: ["Ser a campanha mais criativa e bonita.", "Ter o maior orçamento de marketing.", "Ter credibilidade e ser autêntica.", "Ser a mais viral nas redes sociais."], a: 2 },
+                { q: "A iniciativa 'Movimento Reciclo' da C&A, que transforma roupas usadas em novas peças, é um exemplo prático de quê?", o: ["Um programa para vender roupas mais caro.", "Apenas uma campanha de marketing para redes sociais.", "Economia circular, que depende do engajamento dos consumidores.", "Uma forma de descartar roupas velhas."], a: 2 },
+                { q: "A transformação para um futuro mais sustentável depende principalmente de quem?", o: ["Apenas dos governos e das leis.", "Apenas das grandes empresas.", "Do engajamento de toda a sociedade, através de mudanças de comportamento.", "Apenas de países desenvolvidos."], a: 2 },
+                { q: "Qual é o resultado esperado quando as pessoas se informam e entendem os impactos da crise climática?", o: ["Ter mais assuntos para conversar com amigos.", "Que elas mudem seus comportamentos e se tornem agentes de mudança.", "Apenas criticar as empresas nas redes sociais.", "Esperar que a tecnologia resolva tudo sozinha."], a: 1 }
+            ]
         },
         {
-            theme: "Saberes e Responsabilidades", influencer: "Brenër Pompêo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            questions: [ { q: "Pergunta Saberes 1?", o: ["Opção A", "Opção B", "Opção C", "Opção D"], a: 0 } ]
+            theme: "Saberes e Responsabilidades", influencer: "Brenër Pompêo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // SUBSTITUIR ID DO VÍDEO
+            questions: [
+                { q: "Do ponto de vista indígena, qual é a principal prioridade que deve guiar o progresso?", o: ["O lucro das grandes corporações.", "A proteção da vida e o cuidado com a Mãe Terra.", "A exploração máxima dos recursos naturais.", "A urbanização completa de todas as áreas."], a: 1 },
+                { q: "Qual é a principal crítica que a ciberativista Bekoy faz sobre grandes eventos como a COP?", o: ["Dão visibilidade aos povos indígenas, mas pouca participação real nas decisões.", "São muito longos e caros.", "Focam demais em tecnologia e não o suficiente em política.", "Acontecem muito longe dos territórios indígenas."], a: 0 },
+                { q: "O conhecimento dos povos indígenas sobre como preservar a natureza vem principalmente de onde?", o: ["De estudos acadêmicos e universidades.", "Da sabedoria ancestral e do cuidado prático com a Mãe Terra.", "De organizações ambientais internacionais.", "De programas de treinamento do governo."], a: 1 },
+                { q: "Além de gerar energia, como uma empresa como a Itaipu está contribuindo para a COP30 em Belém?", o: ["Oferecendo cursos e apoiando obras de infraestrutura, como saneamento.", "Patrocinando shows e eventos culturais.", "Financiando as viagens de todas as delegações.", "Construindo um novo aeroporto na cidade."], a: 0 },
+                { q: "Para a Itaipu, por que conservar o ecossistema ao redor da hidrelétrica é uma boa estratégia de negócio?", o: ["É apenas para melhorar a imagem da empresa.", "Porque garante a qualidade da água e, consequentemente, a segurança energética.", "Somente para criar uma paisagem bonita para o turismo.", "Para poder aumentar o preço da energia."], a: 1 },
+                { q: "O que conecta a ação de uma grande empresa como a Itaipu e a luta dos povos indígenas?", o: ["Ambos buscam financiamento internacional para seus projetos.", "Apenas o foco exclusivo na região amazônica.", "A ideia de que cuidar da natureza é fundamental para o futuro, seja para os negócios ou para a própria vida.", "Ambos são contra qualquer tipo de crescimento econômico."], a: 2 }
+            ]
         }
     ];
 
