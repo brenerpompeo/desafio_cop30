@@ -240,7 +240,8 @@
         .form-group label { font-weight: 500; color: var(--text-muted); }
         .form-group input[type="text"],
         .form-group input[type="number"],
-        .form-group input[type="tel"] {
+        .form-group input[type="tel"],
+        .form-group select {
             font-family: 'Roboto', sans-serif;
             width: 100%;
             padding: 1rem;
@@ -251,8 +252,16 @@
             font-size: 1rem;
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
-        .form-group input:focus {
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f0f8ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+        .form-group input:focus, .form-group select:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
         }
@@ -268,7 +277,6 @@
         .theme-btn { display: block; }
         .theme-btn span { font-size: 0.8rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 0.3rem; }
         .theme-btn p { font-size: 1rem; font-weight: 500; }
-        .theme-btn small { font-size: 0.9rem; color: var(--text-muted); }
 
         /* --- TELA 4: QUIZ --- */
         .quiz-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
@@ -305,7 +313,6 @@
         .rank-pos { font-size: 1.5rem; font-weight: 900; color: var(--text-muted); width: 40px; text-align: center; }
         .rank-info { flex-grow: 1; }
         .rank-info p { font-weight: 500; }
-        .rank-info small { color: var(--text-muted); }
         .rank-score { font-size: 1.8rem; font-weight: 900; color: var(--accent); }
 
         /* --- TELA 7: ENTREVISTADOS --- */
@@ -323,6 +330,20 @@
             line-height: 1.5;
         }
         .interview-card small strong { color: var(--text-light); }
+        .interview-card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 1rem;
+        }
+        .btn-action {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 10px;
+        }
+        .btn-delete { background-color: var(--err); color: white; }
 
         /* --- MODAL DE CONFIRMAÇÃO --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
@@ -366,18 +387,18 @@
                      </button>
                      <div style="width: 24px;"></div>
                 </header>
-                <h2 style="text-align: center;">Participe do Desafio</h2>
-                <p style="text-align: center; color: var(--text-muted); margin-top: -1.5rem;">
-                    Preencha os dados do entrevistado para iniciar.
-                </p>
+                <h2 style="text-align: center;">Dados do Entrevistado</h2>
                 <form id="lead-form" novalidate>
+                    <div class="form-group">
+                        <label for="form-influencer">Entrevistador(a)</label>
+                        <select id="form-influencer" required></select>
+                    </div>
                     <div class="form-group"><label for="form-name">Nome Completo</label><input type="text" id="form-name" required placeholder="Nome do entrevistado"></div>
                     <div class="form-group"><label for="form-age">Idade</label><input type="number" id="form-age" required placeholder="Idade do entrevistado"></div>
                     <div class="form-group"><label for="form-job">Profissão</label><input type="text" id="form-job" required placeholder="Profissão do entrevistado"></div>
                     <div class="form-group"><label for="form-company">Empresa</label><input type="text" id="form-company" required placeholder="Empresa do entrevistado"></div>
                     <div class="form-group"><label for="form-whatsapp">WhatsApp</label><input type="tel" id="form-whatsapp" required placeholder="(XX) XXXXX-XXXX"></div>
                     <div class="consent-group"><input type="checkbox" id="form-consent" required><label for="form-consent">Concordo com os termos e autorizo o uso de dados e imagem para fins de divulgação da ação.</label></div>
-                    <p id="form-error-message"></p>
                     <button type="submit" id="submit-lead-btn" class="btn btn-primary" style="width: 100%;" disabled>Iniciar Quiz</button>
                 </form>
             </div>
@@ -439,7 +460,7 @@
             <div class="content-card">
                 <header class="menu-header">
                     <button id="back-to-menu-from-ranking-btn" class="icon-btn" aria-label="Voltar ao menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                    <h2>Ranking</h2>
+                    <h2>Ranking por Tema</h2>
                     <button id="reset-ranking-btn" class="icon-btn" aria-label="Resetar Ranking"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
                 </header>
                 <ul id="ranking-list"></ul>
@@ -545,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let answerSelected = false;
     let selectedThemeIndex = null;
     let currentInterviewData = {};
-    const SCORES_KEY = 'cop30_scores';
+    let editingInterviewIndex = null; // MODIFICADO: Controla se estamos em modo de edição
     const INTERVIEW_DATA_KEY = 'cop30_interview_data';
 
     // --- ELEMENTOS DO DOM ---
@@ -555,6 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionsContainer = document.getElementById('options-container');
     const confirmModal = document.getElementById('confirm-modal');
     const leadForm = document.getElementById('lead-form');
+    const formInfluencer = document.getElementById('form-influencer');
     const formName = document.getElementById('form-name');
     const formAge = document.getElementById('form-age');
     const formJob = document.getElementById('form-job');
@@ -573,34 +595,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const resetInterviewCycle = () => {
         currentInterviewData = {};
+        editingInterviewIndex = null;
         leadForm.reset();
+        submitLeadBtn.textContent = 'Iniciar Quiz';
         validateForm();
         showPanel('menu-screen');
     };
 
     // --- LÓGICA DO FORMULÁRIO DE CAPTURA ---
     const validateForm = () => {
+        const isInfluencerValid = formInfluencer.value !== '';
         const isNameValid = formName.value.trim() !== '';
         const isAgeValid = formAge.value.trim() !== '' && !isNaN(formAge.value);
         const isJobValid = formJob.value.trim() !== '';
         const isCompanyValid = formCompany.value.trim() !== '';
         const isWhatsappValid = formWhatsapp.value.trim().length > 8;
         const isConsentChecked = formConsent.checked;
-        submitLeadBtn.disabled = !(isNameValid && isAgeValid && isJobValid && isCompanyValid && isWhatsappValid && isConsentChecked);
+        submitLeadBtn.disabled = !(isInfluencerValid && isNameValid && isAgeValid && isJobValid && isCompanyValid && isWhatsappValid && isConsentChecked);
     };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
         currentInterviewData = {
+            influencer: formInfluencer.value,
             name: formName.value, age: formAge.value, job: formJob.value,
-            company: formCompany.value, whatsapp: formWhatsapp.value, consent: formConsent.checked
+            company: formCompany.value, whatsapp: formWhatsapp.value, consent: formConsent.checked,
+            themePlayed: quizData[selectedThemeIndex].theme
         };
-        startQuiz(selectedThemeIndex);
+
+        if (editingInterviewIndex !== null) {
+            // Modo de Edição
+            let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
+            // Mantém os dados de score e tira-dúvidas se já existirem
+            currentInterviewData.scoreAchieved = interviews[editingInterviewIndex].scoreAchieved;
+            currentInterviewData.wantsHelp = interviews[editingInterviewIndex].wantsHelp;
+            interviews[editingInterviewIndex] = currentInterviewData;
+            localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
+            editingInterviewIndex = null;
+            submitLeadBtn.textContent = 'Iniciar Quiz';
+            loadInterviewedData();
+        } else {
+            // Modo de Nova Entrevista
+            startQuiz(selectedThemeIndex);
+        }
     };
 
     // --- FUNÇÕES DE LÓGICA DO QUIZ ---
     const selectTheme = (themeIndex) => {
         selectedThemeIndex = themeIndex;
+        leadForm.reset();
+        validateForm();
         showPanel('form-screen');
     };
 
@@ -664,7 +708,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const finishQuiz = (themeIndex) => {
-        saveScore(themeIndex, currentScore);
         showResult(themeIndex);
     };
     
@@ -677,8 +720,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const maxScore = themeData.questions.length * 10;
         const normalizedScore = maxScore > 0 ? Math.round((currentScore / maxScore) * 100) : 0;
         
-        // MODIFICADO: Adiciona tema e score aos dados da entrevista atual
-        currentInterviewData.themePlayed = themeData.theme;
         currentInterviewData.scoreAchieved = normalizedScore;
 
         document.getElementById('result-theme-title').innerText = themeData.theme;
@@ -695,20 +736,29 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const loadRanking = () => {
-        const scores = getScores();
         const rankingList = document.getElementById('ranking-list');
         rankingList.innerHTML = '';
-        const sortedScores = quizData.map((theme, index) => ({
-            theme: theme.theme, influencer: theme.influencer,
-            score: scores[index] || 0, maxScore: theme.questions.length * 10
-        })).sort((a,b) => b.score - a.score);
-        if (sortedScores.every(item => item.score === 0)) {
+        let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
+        
+        const themeScores = {};
+        quizData.forEach(t => themeScores[t.theme] = 0);
+
+        interviews.forEach(interview => {
+            if (interview.themePlayed && interview.scoreAchieved !== undefined) {
+                themeScores[interview.themePlayed] += interview.scoreAchieved;
+            }
+        });
+
+        const sortedThemes = Object.entries(themeScores)
+            .map(([theme, totalScore]) => ({ theme, totalScore }))
+            .sort((a, b) => b.totalScore - a.totalScore);
+
+        if (interviews.length === 0) {
             rankingList.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Nenhuma pontuação registrada ainda.</p>`;
         } else {
-            sortedScores.forEach((item, index) => {
-                const normalizedRankScore = item.maxScore > 0 ? Math.round((item.score / item.maxScore) * 100) : 0;
+            sortedThemes.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.innerHTML = `<span class="rank-pos">${index + 1}</span><div class="rank-info"><p>${item.theme}</p><small>com ${item.influencer}</small></div><span class="rank-score">${normalizedRankScore}</span>`;
+                li.innerHTML = `<span class="rank-pos">${index + 1}</span><div class="rank-info"><p>${item.theme}</p></div><span class="rank-score">${item.totalScore}</span>`;
                 rankingList.appendChild(li);
             });
         }
@@ -718,25 +768,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadInterviewedData = () => {
         const list = document.getElementById('interviewed-list');
         list.innerHTML = '';
-        let interviews = localStorage.getItem(INTERVIEW_DATA_KEY);
-        interviews = interviews ? JSON.parse(interviews) : [];
+        let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
 
         if (interviews.length === 0) {
             list.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Nenhum entrevistado registrado ainda.</p>`;
         } else {
-            interviews.forEach(data => {
+            interviews.forEach((data, index) => {
                 const li = document.createElement('li');
                 li.className = 'interview-card';
-                // MODIFICADO: Exibe os novos dados de tema e pontuação
                 li.innerHTML = `
                     <p>${data.name}</p>
+                    <small><strong>Entrevistador(a):</strong> ${data.influencer}</small>
                     <small><strong>Idade:</strong> ${data.age}</small>
                     <small><strong>Profissão:</strong> ${data.job}</small>
                     <small><strong>Empresa:</strong> ${data.company}</small>
                     <small><strong>WhatsApp:</strong> ${data.whatsapp}</small>
                     <small><strong>Temática:</strong> ${data.themePlayed || 'N/A'}</small>
                     <small><strong>Pontuação:</strong> ${data.scoreAchieved !== undefined ? data.scoreAchieved + ' / 100' : 'N/A'}</small>
-                    <small><strong>Posto Tira-Dúvidas:</strong> ${data.wantsHelp ? 'Sim' : 'Não'}</small>
+                    <small><strong>Posto Tira-Dúvidas:</strong> ${data.wantsHelp !== undefined ? (data.wantsHelp ? 'Sim' : 'Não') : 'N/A'}</small>
+                    <div class="interview-card-actions">
+                        <button class="btn btn-secondary btn-action" data-index="${index}" onclick="window.app.editInterview(${index})">Editar</button>
+                        <button class="btn btn-delete btn-action" data-index="${index}" onclick="window.app.deleteInterview(${index})">Excluir</button>
+                    </div>
                 `;
                 list.appendChild(li);
             });
@@ -745,32 +798,49 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // --- FUNÇÕES DO LOCALSTORAGE ---
-    const getScores = () => {
-        const scores = localStorage.getItem(SCORES_KEY);
-        return scores ? JSON.parse(scores) : {};
-    };
-    const saveScore = (themeIndex, score) => {
-        const scores = getScores();
-        if (!scores[themeIndex] || score > scores[themeIndex]) {
-            scores[themeIndex] = score;
-            localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
-        }
-    };
-    const resetScores = () => {
-        localStorage.removeItem(SCORES_KEY);
-        loadRanking();
-    };
-
     const endInterview = (wantsHelp) => {
         currentInterviewData.wantsHelp = wantsHelp;
         
-        let interviews = localStorage.getItem(INTERVIEW_DATA_KEY);
-        interviews = interviews ? JSON.parse(interviews) : [];
+        let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
         interviews.push(currentInterviewData);
         localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
 
         tiraDuvidasSection.style.display = 'none';
         newInterviewBtn.style.display = 'block';
+    };
+
+    // --- FUNÇÕES DE EDIÇÃO E EXCLUSÃO ---
+    window.app = {
+        editInterview: (index) => {
+            let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
+            const dataToEdit = interviews[index];
+            if (!dataToEdit) return;
+
+            editingInterviewIndex = index;
+            
+            formInfluencer.value = dataToEdit.influencer;
+            formName.value = dataToEdit.name;
+            formAge.value = dataToEdit.age;
+            formJob.value = dataToEdit.job;
+            formCompany.value = dataToEdit.company;
+            formWhatsapp.value = dataToEdit.whatsapp;
+            formConsent.checked = dataToEdit.consent;
+            
+            // Encontra o themeIndex a partir do nome do tema
+            selectedThemeIndex = quizData.findIndex(t => t.theme === dataToEdit.themePlayed);
+
+            submitLeadBtn.textContent = 'Salvar Alterações';
+            validateForm();
+            showPanel('form-screen');
+        },
+        deleteInterview: (index) => {
+            if (confirm('Tem certeza que deseja excluir este registro?')) {
+                let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
+                interviews.splice(index, 1);
+                localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
+                loadInterviewedData(); // Recarrega a lista
+            }
+        }
     };
 
     // --- INICIALIZAÇÃO E EVENT LISTENERS ---
@@ -779,11 +849,20 @@ document.addEventListener('DOMContentLoaded', () => {
         quizData.forEach((theme, index) => {
             const button = document.createElement('button');
             button.className = 'btn btn-glass theme-btn';
-            button.innerHTML = `<span>TEMÁTICA ${index + 1}</span><p>${theme.theme}</p><small>com ${theme.influencer}</small>`;
+            button.innerHTML = `<span>TEMÁTICA ${index + 1}</span><p>${theme.theme}</p>`;
             button.onclick = () => selectTheme(index);
             themesList.appendChild(button);
         });
-        [formName, formAge, formJob, formCompany, formWhatsapp, formConsent].forEach(input => {
+
+        formInfluencer.innerHTML = '<option value="" disabled selected>Selecione um(a) entrevistador(a)</option>';
+        quizData.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.influencer;
+            option.textContent = item.influencer;
+            formInfluencer.appendChild(option);
+        });
+
+        [formInfluencer, formName, formAge, formJob, formCompany, formWhatsapp, formConsent].forEach(input => {
             input.addEventListener('input', validateForm);
         });
         leadForm.addEventListener('submit', handleFormSubmit);
@@ -805,15 +884,15 @@ document.addEventListener('DOMContentLoaded', () => {
     nextQuestionBtn.onclick = nextQuestion;
     document.getElementById('show-ranking-btn').onclick = loadRanking;
     document.getElementById('show-interviewed-btn').onclick = loadInterviewedData;
-    document.getElementById('reset-ranking-btn').onclick = () => confirmModal.classList.add('active');
-    
-    // Lógica do Modal
-    document.getElementById('cancel-reset-btn').onclick = () => confirmModal.classList.remove('active');
-    document.getElementById('confirm-reset-btn').onclick = () => {
-        resetScores();
-        confirmModal.classList.remove('active');
+    document.getElementById('reset-ranking-btn').onclick = () => {
+        if (confirm('Tem certeza que deseja zerar TODAS as pontuações do ranking?')) {
+            let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
+            interviews.forEach(i => i.scoreAchieved = 0);
+            localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
+            loadRanking();
+        }
     };
-
+    
     init();
 });
 </script>
