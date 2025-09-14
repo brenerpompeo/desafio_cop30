@@ -305,6 +305,22 @@
         .rank-info small { color: var(--text-muted); }
         .rank-score { font-size: 1.8rem; font-weight: 900; color: var(--accent); }
 
+        /* --- NOVA TELA 7: ENTREVISTADOS --- */
+        #interviewed-list { list-style: none; width: 100%; display: flex; flex-direction: column; gap: 1rem; }
+        .interview-card {
+            background: var(--bg-glass);
+            padding: 1rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-glass);
+        }
+        .interview-card p { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .interview-card small {
+            display: block;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .interview-card small strong { color: var(--text-light); }
+
         /* --- MODAL DE CONFIRMAÇÃO --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .modal.active { opacity: 1; visibility: visible; }
@@ -373,6 +389,8 @@
                 </header>
                 <div id="themes-list"></div>
                 <button id="show-ranking-btn" class="btn btn-primary">Ver Ranking</button>
+                <!-- NOVO BOTÃO: Para ver os entrevistados -->
+                <button id="show-interviewed-btn" class="btn btn-primary">Ver Entrevistados</button>
             </div>
         </div>
         
@@ -415,6 +433,22 @@
                     <button id="reset-ranking-btn" class="icon-btn" aria-label="Resetar Ranking"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
                 </header>
                 <ul id="ranking-list"></ul>
+            </div>
+        </div>
+
+        <!-- NOVO PAINEL 7: Entrevistados -->
+        <div id="interviewed-screen" class="panel">
+            <div class="content-card">
+                <header class="menu-header">
+                    <button id="back-to-menu-from-interviewed-btn" class="icon-btn" aria-label="Voltar ao menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                     </button>
+                    <h2>Entrevistados</h2>
+                    <div style="width: 24px;"></div>
+                </header>
+                <ul id="interviewed-list">
+                    <!-- Dados dos entrevistados serão injetados aqui -->
+                </ul>
             </div>
         </div>
         
@@ -503,6 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let answerSelected = false;
     let selectedThemeIndex = null;
     const SCORES_KEY = 'cop30_scores';
+    const INTERVIEW_DATA_KEY = 'cop30_interview_data'; // MODIFICADO: Nova chave para dados dos entrevistados
     let isUserRegisteredInSession = false;
 
     // --- ELEMENTOS DO DOM ---
@@ -546,30 +581,23 @@ document.addEventListener('DOMContentLoaded', () => {
         submitLeadBtn.disabled = !(isNameValid && isAgeValid && isJobValid && isCompanyValid && isWhatsappValid && isConsentChecked);
     };
 
+    // MODIFICADO: Nova função para salvar dados no localStorage
+    const saveInterviewData = (data) => {
+        let interviews = localStorage.getItem(INTERVIEW_DATA_KEY);
+        interviews = interviews ? JSON.parse(interviews) : [];
+        interviews.push(data);
+        localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
+    };
+
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxFE4GZg9VPxusXL0opq6ghOBK_TWHpTiogUgEsMk92P87CTrKCQjj2VqFNAUVowOO2uA/exec';
-        submitLeadBtn.disabled = true;
-        submitLeadBtn.textContent = 'Enviando...';
-        formErrorMessage.textContent = '';
         const formData = {
             name: formName.value, age: formAge.value, job: formJob.value,
             company: formCompany.value, whatsapp: formWhatsapp.value, consent: formConsent.checked
         };
-        fetch(scriptURL, { method: 'POST', body: JSON.stringify(formData), headers: { 'Content-Type': 'application/json' } })
-        .then(response => response.json())
-        .then(data => {
-            if (data.result === 'success') {
-                isUserRegisteredInSession = true;
-                startQuiz(selectedThemeIndex);
-            } else { throw new Error(data.message || 'Erro desconhecido.'); }
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            formErrorMessage.textContent = 'Ocorreu um erro. Tente novamente.';
-            submitLeadBtn.disabled = false;
-            submitLeadBtn.textContent = 'Iniciar Quiz';
-        });
+        saveInterviewData(formData);
+        isUserRegisteredInSession = true;
+        startQuiz(selectedThemeIndex);
     };
 
     // --- FUNÇÕES DE LÓGICA DO QUIZ ---
@@ -684,8 +712,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showPanel('ranking-screen');
     };
+
+    // MODIFICADO: Nova função para carregar e exibir dados dos entrevistados
+    const loadInterviewedData = () => {
+        const list = document.getElementById('interviewed-list');
+        list.innerHTML = '';
+        let interviews = localStorage.getItem(INTERVIEW_DATA_KEY);
+        interviews = interviews ? JSON.parse(interviews) : [];
+
+        if (interviews.length === 0) {
+            list.innerHTML = `<p style="text-align: center; color: var(--text-muted);">Nenhum entrevistado registrado ainda.</p>`;
+        } else {
+            interviews.forEach(data => {
+                const li = document.createElement('li');
+                li.className = 'interview-card';
+                li.innerHTML = `
+                    <p>${data.name}</p>
+                    <small><strong>Idade:</strong> ${data.age}</small>
+                    <small><strong>Profissão:</strong> ${data.job}</small>
+                    <small><strong>Empresa:</strong> ${data.company}</small>
+                    <small><strong>WhatsApp:</strong> ${data.whatsapp}</small>
+                `;
+                list.appendChild(li);
+            });
+        }
+        showPanel('interviewed-screen');
+    };
     
-    // --- FUNÇÕES DO LOCALSTORAGE (para o ranking, que é persistente) ---
+    // --- FUNÇÕES DO LOCALSTORAGE ---
     const getScores = () => {
         const scores = localStorage.getItem(SCORES_KEY);
         return scores ? JSON.parse(scores) : {};
@@ -725,10 +779,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('back-to-menu-btn').onclick = () => showPanel('menu-screen');
     document.getElementById('back-to-menu-from-result-btn').onclick = () => showPanel('menu-screen');
     document.getElementById('back-to-menu-from-ranking-btn').onclick = () => showPanel('menu-screen');
+    document.getElementById('back-to-menu-from-interviewed-btn').onclick = () => showPanel('menu-screen');
     
     // Lógica do Quiz e Ranking
     nextQuestionBtn.onclick = nextQuestion;
     document.getElementById('show-ranking-btn').onclick = loadRanking;
+    document.getElementById('show-interviewed-btn').onclick = loadInterviewedData; // MODIFICADO: Listener para o novo botão
     document.getElementById('reset-ranking-btn').onclick = () => confirmModal.classList.add('active');
     
     // Lógica do Modal
