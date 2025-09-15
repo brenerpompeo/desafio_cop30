@@ -100,12 +100,32 @@
             gap: 1.5rem;
         }
         
-        .content-card::-webkit-scrollbar { width: 8px; }
-        .content-card::-webkit-scrollbar-track { background: transparent; }
-        .content-card::-webkit-scrollbar-thumb {
+        /* --- SCROLLBAR PERSONALIZADO --- */
+        .content-card::-webkit-scrollbar,
+        .custom-options::-webkit-scrollbar,
+        #interviewees-by-theme-modal .modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .content-card::-webkit-scrollbar-track,
+        .custom-options::-webkit-scrollbar-track,
+        #interviewees-by-theme-modal .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .content-card::-webkit-scrollbar-thumb,
+        .custom-options::-webkit-scrollbar-thumb,
+        #interviewees-by-theme-modal .modal-content::-webkit-scrollbar-thumb {
             background-color: var(--border-glass);
             border-radius: 20px;
             border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        .content-card::-webkit-scrollbar-thumb:hover,
+        .custom-options::-webkit-scrollbar-thumb:hover,
+        #interviewees-by-theme-modal .modal-content::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
         /* --- RODAPÉ GLOBAL --- */
