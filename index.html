@@ -928,7 +928,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
                 interviews.splice(index, 1);
                 localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
-                showInfoModal('Sucesso!', 'Registro excluído com sucesso.', () => loadInterviewedData());
+                showInfoModal('Sucesso!', 'Registro excluído com sucesso.', loadInterviewedData);
             });
         }
     };
@@ -1077,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let interviews = JSON.parse(localStorage.getItem(INTERVIEW_DATA_KEY)) || [];
             interviews.forEach(i => i.scoreAchieved = 0);
             localStorage.setItem(INTERVIEW_DATA_KEY, JSON.stringify(interviews));
-            showInfoModal('Sucesso!', 'Pontuações do ranking zeradas.', () => loadRanking());
+            showInfoModal('Sucesso!', 'Pontuações do ranking zeradas.', loadRanking);
         });
     };
     
@@ -1094,28 +1094,27 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const headers = ["Nome", "Idade", "Profissao", "Empresa", "WhatsApp", "Consentimento", "Influenciadora", "Tematica", "Pontuacao", "PostoTiraDuvidas"];
         
-        // Função para escapar vírgulas e aspas
         const escapeCSV = (field) => {
             if (field === null || field === undefined) return '""';
             const str = String(field);
-            if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+            if (str.includes(';') || str.includes('"') || str.includes('\n')) {
                 return `"${str.replace(/"/g, '""')}"`;
             }
             return str;
         };
 
-        const csvRows = [headers.join(',')];
+        const csvRows = [headers.join(';')];
         interviews.forEach(i => {
             const row = [
                 escapeCSV(i.name), escapeCSV(i.age), escapeCSV(i.job), escapeCSV(i.company),
                 escapeCSV(i.whatsapp), escapeCSV(i.consent), escapeCSV(i.influencer),
                 escapeCSV(i.themePlayed), escapeCSV(i.scoreAchieved), escapeCSV(i.wantsHelp)
             ];
-            csvRows.push(row.join(','));
+            csvRows.push(row.join(';'));
         });
         
         const csvContent = csvRows.join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement("a");
         const url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
